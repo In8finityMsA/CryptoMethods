@@ -1,6 +1,7 @@
 #pragma once
 #include "icipher.h"
 #include <string>
+#include <stdexcept>
 
 class ShiftCipher : public ICipher<std::string, size_t> {
 	typedef std::string::value_type Character;
@@ -10,7 +11,7 @@ public:
 			throw std::invalid_argument("Alphabet is zero length.");
 		}
 		this->alphabet = alphabet;
-		key = FindInAlphabet(char_key) + 1;
+		key = FindInAlphabet(char_key);
 	}
 
 	std::string Decrypt(const std::string& ciphertext) const override {
