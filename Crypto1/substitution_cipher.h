@@ -21,7 +21,7 @@ public:
 			auto result = encrypt_map.insert({ alphabet[i], string_key[i] });
 			decrypt_map.insert({ string_key[i], alphabet[i] });
 			if (!result.second) {
-				throw ("Alphabet symbols are not unique");
+				throw std::invalid_argument("Alphabet symbols are not unique");
 			}
 		}
 		for (size_t i = 0; i < alphabet.length(); i++) {
