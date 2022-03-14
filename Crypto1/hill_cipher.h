@@ -5,9 +5,8 @@
 #include <array>
 #include <map>
 
-class HillCipher : public ICipher<std::string, std::array<std::array<int, 2>, 2>> {
+class HillCipher : public ICipher {
 	typedef std::array<std::array<int, 2>, 2> Matrix2;
-	typedef std::string::value_type Character;
 public:
 	HillCipher(std::string string_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß ") {
 		if (alphabet.length() == 0) {
@@ -73,6 +72,7 @@ public:
 	}
 
 private:
+	Matrix2 key;
 	Matrix2 inverse_key;
 	std::map<Character, size_t> index_alphabet;
 

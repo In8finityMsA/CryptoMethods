@@ -5,8 +5,7 @@
 #include <map>
 #include <vector>
 
-class VigenereCipher : public ICipher<std::string, std::vector<size_t>> {
-	typedef std::string::value_type Character;
+class VigenereCipher : public ICipher {
 public:
 	VigenereCipher(std::string string_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß ") {
 		if (alphabet.length() == 0) {
@@ -56,6 +55,7 @@ public:
 	}
 
 private:
+	std::vector<size_t> key;
 	std::map<Character, size_t> index_alphabet;
 
 	size_t FindInAlphabetIndex(Character c) const {

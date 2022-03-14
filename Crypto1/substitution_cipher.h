@@ -4,8 +4,7 @@
 #include <stdexcept>
 #include <map>
 
-class SubstitutionCipher : public ICipher<std::string, std::string> {
-	typedef std::string::value_type Character;
+class SubstitutionCipher : public ICipher {
 public:
 	SubstitutionCipher(std::string string_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß ") {
 		if (alphabet.length() == 0) {
@@ -52,6 +51,7 @@ public:
 	}
 
 private:
+	std::string key;
 	std::map<Character, Character> encrypt_map;
 	std::map<Character, Character> decrypt_map;
 };

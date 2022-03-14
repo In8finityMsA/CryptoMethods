@@ -4,8 +4,7 @@
 #include <stdexcept>
 #include <utility>
 
-class AffineCipher : public ICipher<std::string, std::pair<size_t, size_t>> {
-	typedef std::string::value_type Character;
+class AffineCipher : public ICipher {
 public:
 	AffineCipher(std::pair<Character, Character> char_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß ") {
 		if (alphabet.length() == 0) {
@@ -47,6 +46,7 @@ public:
 	}
 
 private:
+	std::pair<size_t, size_t> key;
 	size_t euler_m;
 	size_t inverse;
 

@@ -3,8 +3,7 @@
 #include <string>
 #include <stdexcept>
 
-class ShiftCipher : public ICipher<std::string, size_t> {
-	typedef std::string::value_type Character;
+class ShiftCipher : public ICipher {
 public: 
 	ShiftCipher(Character char_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß ") {
 		if (alphabet.length() == 0) {
@@ -39,6 +38,8 @@ public:
 	}
 
 private:
+	size_t key;
+
 	size_t FindInAlphabet(Character c) const {
 		auto alphabet_position = alphabet.find(c);
 		if (alphabet_position == std::string::npos) {
