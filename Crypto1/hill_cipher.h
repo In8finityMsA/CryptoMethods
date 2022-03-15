@@ -15,14 +15,8 @@ public:
 		if (string_key.length() != 4) {
 			throw std::invalid_argument("Key length must be four.");
 		}
+		InitAlphabetIndex(alphabet);
 		this->alphabet = alphabet;
-		
-		for (size_t i = 0; i < alphabet.length(); i++) {
-			auto result = index_alphabet.insert({ alphabet[i], i });
-			if (!result.second) {
-				throw std::invalid_argument("Alphabet symbols are not unique.");
-			}
-		}
 
 		key[0][0] = FindInAlphabetIndex(string_key[0]);
 		key[0][1] = FindInAlphabetIndex(string_key[1]);
@@ -74,16 +68,6 @@ public:
 private:
 	Matrix2 key;
 	Matrix2 inverse_key;
-	std::map<Character, size_t> index_alphabet;
-
-
-	size_t FindInAlphabetIndex(Character c) const {
-		auto iter = index_alphabet.find(c);
-		if (iter == index_alphabet.end()) {
-			throw std::invalid_argument("Cannot find a character in the alphabet.");
-		}
-		return iter->second;
-	}
 
 	Matrix2 Inverse_Matrix2(Matrix2 matrix, int mod) {
 		int det = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];

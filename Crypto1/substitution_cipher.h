@@ -2,7 +2,6 @@
 #include "icipher.h"
 #include <string>
 #include <stdexcept>
-#include <map>
 
 class SubstitutionCipher : public ICipher {
 public:

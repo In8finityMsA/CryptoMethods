@@ -9,15 +9,17 @@ public:
 		if (alphabet.length() == 0) {
 			throw std::invalid_argument("Alphabet is zero length.");
 		}
+		InitAlphabetIndex(alphabet);
 		this->alphabet = alphabet;
-		key = FindInAlphabet(char_key);
+
+		key = FindInAlphabetIndex(char_key);
 	}
 
 	std::string Decrypt(const std::string& ciphertext) const override {
 		std::string out;
 		out.reserve(ciphertext.length());
 		for (size_t i = 0; i < ciphertext.length(); i++) {
-			auto index = FindInAlphabet(ciphertext[i]);
+			auto index = FindInAlphabetIndex(ciphertext[i]);
 			index = index >= key ? index - key : alphabet.length() - key + index;
 			Character decrypted_char = alphabet[ index ];
 			out.push_back(decrypted_char);
@@ -29,7 +31,7 @@ public:
 		std::string out;
 		out.reserve(text.length());
 		for (size_t i = 0; i < text.length(); i++) {
-			auto index = FindInAlphabet(text[i]);
+			auto index = FindInAlphabetIndex(text[i]);
 			index = index + key < alphabet.length() ? index + key : key + index - alphabet.length();
 			Character encrypted_char = alphabet[ index ];
 			out.push_back(encrypted_char);
@@ -39,12 +41,13 @@ public:
 
 private:
 	size_t key;
+	std::map<Character, size_t> index_alphabet;
 
-	size_t FindInAlphabet(Character c) const {
-		auto alphabet_position = alphabet.find(c);
-		if (alphabet_position == std::string::npos) {
+	size_t FindInAlphabetIndex(Character c) const {
+		auto iter = index_alphabet.find(c);
+		if (iter == index_alphabet.end()) {
 			throw std::invalid_argument("Cannot find a character in the alphabet.");
 		}
-		return alphabet_position;
+		return iter->second;
 	}
 };

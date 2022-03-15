@@ -10,13 +10,14 @@ public:
 		if (alphabet.length() == 0) {
 			throw std::invalid_argument("Alphabet is zero length.");
 		}
+		InitAlphabetIndex(alphabet);
 		this->alphabet = alphabet;
 
-		key.first = FindInAlphabet(char_key.first);
+		key.first = FindInAlphabetIndex(char_key.first);
 		if (GCD(alphabet.length(), key.first) != 1) {
 			throw std::invalid_argument("First part of a key and alphabet length are not coprime.");
 		}
-		key.second = FindInAlphabet(char_key.second);
+		key.second = FindInAlphabetIndex(char_key.second);
 
 		euler_m = Euler(alphabet.length());
 		inverse = Inverse(key.first, alphabet.length());
@@ -26,7 +27,7 @@ public:
 		std::string out;
 		out.reserve(ciphertext.length());
 		for (size_t i = 0; i < ciphertext.length(); i++) {
-			auto index = FindInAlphabet(ciphertext[i]);
+			auto index = FindInAlphabetIndex(ciphertext[i]);
 			index = index >= key.second ? index - key.second : alphabet.length() - key.second + index;
 			Character decrypted_char = alphabet[inverse * index % alphabet.length()];
 			out.push_back(decrypted_char);
@@ -38,7 +39,7 @@ public:
 		std::string out;
 		out.reserve(text.length());
 		for (size_t i = 0; i < text.length(); i++) {
-			auto index = FindInAlphabet(text[i]);
+			auto index = FindInAlphabetIndex(text[i]);
 			Character encrypted_char = alphabet[(key.first * index + key.second) % alphabet.length() ];
 			out.push_back(encrypted_char);
 		}
@@ -49,14 +50,6 @@ private:
 	std::pair<size_t, size_t> key;
 	size_t euler_m;
 	size_t inverse;
-
-	size_t FindInAlphabet(Character c) const {
-		auto alphabet_position = alphabet.find(c);
-		if (alphabet_position == std::string::npos) {
-			throw std::invalid_argument("Cannot find a character in the alphabet.");
-		}
-		return alphabet_position;
-	}
 
 	size_t GCD(size_t a, size_t b) {
 		while (b != 0) {
