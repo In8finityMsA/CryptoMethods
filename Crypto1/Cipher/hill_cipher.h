@@ -31,6 +31,9 @@ public:
 	std::string Decrypt(const std::string& ciphertext) const override {
 		std::string out;
 		out.reserve(ciphertext.length());
+		if (ciphertext.length() % key.size()) {
+			throw std::invalid_argument("Ciphertext length must be divisible by key length.");
+		}
 
 		for (size_t i = 0; i < ciphertext.length(); i += 2) {
 			for (size_t j = 0; j < 2; j++) {
@@ -45,10 +48,13 @@ public:
 	}
 
 	std::string Encrypt(const std::string& text) const override {
+		std::string in = text;
 		std::string out;
-		bool is_odd = text.length() % 2 == 1;
-
-		out.reserve(text.length() + is_odd);
+		if (in.length() % key.size()) {
+			auto padding = key.size() - in.length() % key.size();
+			in.append(padding, alphabet[0]);
+		}
+		out.reserve(in.length());
 		
 		for (size_t i = 0; i < text.length(); i += 2) {
 			for (size_t j = 0; j < 2; j++) {

@@ -76,7 +76,7 @@ public:
 		std::string out;
 		if (in.length() % key.size()) {
 			auto padding = key.size() - in.length() % key.size();
-			in.append(padding, 'A');
+			in.append(padding, alphabet[0]);
 		}
 
 		out.resize(in.length());
