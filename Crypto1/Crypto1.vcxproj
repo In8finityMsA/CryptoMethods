@@ -142,8 +142,15 @@
     <ClCompile Include="Crypto1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="icipher.h" />
-    <ClInclude Include="shift_cipher.h" />
+    <ClInclude Include="Cipher\affine_cipher.h" />
+    <ClInclude Include="Cipher\ciphers.h" />
+    <ClInclude Include="Cipher\hill_cipher.h" />
+    <ClInclude Include="Cipher\permutation_cipher.h" />
+    <ClInclude Include="Cipher\shift_cipher.h" />
+    <ClInclude Include="Cipher\substitution_cipher.h" />
+    <ClInclude Include="Cipher\vigenere_cipher.h" />
+    <ClInclude Include="Interface\icipher.h" />
+    <ClInclude Include="Tools\CipherInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
