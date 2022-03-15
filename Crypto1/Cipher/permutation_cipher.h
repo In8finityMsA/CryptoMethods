@@ -1,9 +1,6 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
+#include "../Interface/icipher.h"
 #include <vector>
-#include <map>
 #include <algorithm>
 
 class PermutationCipher : public ICipher {
@@ -31,6 +28,29 @@ public:
 				throw std::invalid_argument("Key contains equal characters.");
 			}
 			key[permut[i].second] = i;
+		}
+	}
+
+	static HillCipher InitCipher(std::istream& stream_key, std::istream* stream_alphabet = nullptr) {
+		if (!stream_key.good()) {
+			throw std::invalid_argument("Failed reading from key file.");
+		}
+
+		std::string key;
+		std::getline(stream_key, key);
+		if (key.length() != 4) {
+			throw std::invalid_argument("Invalid key format. Key must contain 4 characters.");
+		}
+
+		if (stream_alphabet == nullptr) {
+			return HillCipher(key);
+		} else {
+			if (!stream_alphabet->good()) {
+				throw std::invalid_argument("Failed reading from alphabet file.");
+			}
+			std::string alphabet;
+			std::getline(*stream_alphabet, alphabet);
+			return HillCipher(key, alphabet);
 		}
 	}
 

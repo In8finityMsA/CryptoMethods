@@ -1,9 +1,6 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
+#include "../Interface/icipher.h"
 #include <array>
-#include <map>
 
 class HillCipher : public ICipher {
 	typedef std::array<std::array<int, 2>, 2> Matrix2;

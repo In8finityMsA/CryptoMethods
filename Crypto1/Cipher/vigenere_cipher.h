@@ -1,8 +1,5 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
-#include <map>
+#include "../Interface/icipher.h"
 #include <vector>
 
 class VigenereCipher : public ICipher {

@@ -1,18 +1,19 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
+#include "../Interface/icipher.h"
 
 class ShiftCipher : public ICipher {
 public: 
-	ShiftCipher(Character char_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß ") {
+	ShiftCipher(std::string string_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß ") {
 		if (alphabet.length() == 0) {
 			throw std::invalid_argument("Alphabet is zero length.");
 		}
 		InitAlphabetIndex(alphabet);
 		this->alphabet = alphabet;
 
-		key = FindInAlphabetIndex(char_key);
+		if (string_key.length() != 1) {
+			throw std::invalid_argument("Key length must be one.");
+		}
+		key = FindInAlphabetIndex(string_key[0]);
 	}
 
 	std::string Decrypt(const std::string& ciphertext) const override {

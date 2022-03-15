@@ -1,23 +1,24 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
+#include "../Interface/icipher.h"
 #include <utility>
 
 class AffineCipher : public ICipher {
 public:
-	AffineCipher(std::pair<Character, Character> char_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß ") {
+	AffineCipher(std::string string_key, const std::string& alphabet = "ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß ") {
 		if (alphabet.length() == 0) {
 			throw std::invalid_argument("Alphabet is zero length.");
 		}
 		InitAlphabetIndex(alphabet);
 		this->alphabet = alphabet;
 
-		key.first = FindInAlphabetIndex(char_key.first);
+		if (string_key.length() != 2) {
+			throw std::invalid_argument("Key length must be two.");
+		}
+		key.first = FindInAlphabetIndex(string_key[0]);
 		if (GCD(alphabet.length(), key.first) != 1) {
 			throw std::invalid_argument("First part of a key and alphabet length are not coprime.");
 		}
-		key.second = FindInAlphabetIndex(char_key.second);
+		key.second = FindInAlphabetIndex(string_key[1]);
 
 		euler_m = Euler(alphabet.length());
 		inverse = Inverse(key.first, alphabet.length());

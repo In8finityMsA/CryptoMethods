@@ -1,7 +1,5 @@
 #pragma once
-#include "icipher.h"
-#include <string>
-#include <stdexcept>
+#include "../Interface/icipher.h"
 
 class SubstitutionCipher : public ICipher {
 public:
